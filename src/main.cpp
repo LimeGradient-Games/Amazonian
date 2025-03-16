@@ -4,9 +4,28 @@
 #include <rcamera.h>
 
 #include <utils/Resources.hpp>
+#include <types/Component.hpp>
 #include <types/objects/resources/Image.hpp>
 
 #define MAX_COLUMNS 20
+
+class TestComponent1 : public Amazonian::Component {
+public:
+    void init() override {
+        std::cout << "test component 1" << std::endl;
+    }
+};
+
+class TestComponent2 : public Amazonian::Component {
+public:
+    void init() override {
+        std::cout << "test component 2" << std::endl;
+    }
+
+    void remove() override {
+        std::cout << "removed component 2" << std::endl;
+    }
+};
 
 int main(void) {
     const int screenWidth = 1280;
@@ -38,14 +57,25 @@ int main(void) {
     DisableCursor();
     SetTargetFPS(144);
 
+    TestComponent1* testComponent1 = new TestComponent1();
+    TestComponent2* testComponent2 = new TestComponent2();
+
     Amazonian::Image* image = Amazonian::Image::init(fmt::format("{}/penis.png", AmazonianUtils::getResourcePath()), Vector2{100.f, 100.f}, Vector2{50.f, 50.f}, WHITE);
+
+    image->addComponent(testComponent1);
+    image->addComponent(testComponent2);
+
+    if (image->getComponent<TestComponent1>()) std::cout << "found test component 1" << std::endl;
+    if (image->getComponent<TestComponent2>()) std::cout << "found test component 2" << std::endl;
+
+    image->removeComponent<TestComponent2>();
 
     while (!WindowShouldClose()) {
         UpdateCamera(&camera, CAMERA_FIRST_PERSON);
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
-            
+
             BeginMode3D(camera);
 
                 DrawPlane((Vector3){ 0.0f, 0.0f, 0.0f }, (Vector2){ 32.0f, 32.0f }, LIGHTGRAY); // Draw ground

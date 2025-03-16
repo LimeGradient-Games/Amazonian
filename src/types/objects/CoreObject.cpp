@@ -1,5 +1,7 @@
 #include "types/objects/CoreObject.hpp"
-#include <cstring>
+#include "types/Component.hpp"
+#include <algorithm>
+#include <string.h>
 
 namespace Amazonian {
     char* CoreObject::getID() {
@@ -11,6 +13,6 @@ namespace Amazonian {
     }
 
     void CoreObject::setID(std::string id) {
-        std::strcpy(this->id, id.c_str());
+        strcpy_s(this->id, sizeof this->id, id.c_str());
     }
 }

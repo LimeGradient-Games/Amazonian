@@ -1,10 +1,17 @@
 #include "types/objects/resources/Image.hpp"
+
 #include <raylib.h>
 #include <string>
+
+#include <types/Component.hpp>
 
 namespace Amazonian {
     void Image::draw() {
         DrawTexture(this->texture, this->position.x, this->position.y, this->color);
+        
+        for (Component* component : this->components) {
+            component->update();
+        }
     }
 
     Color Image::getColor() {

@@ -6,6 +6,7 @@
 #include <utils/Resources.hpp>
 #include <types/Component.hpp>
 #include <types/objects/resources/Image.hpp>
+#include <types/Scene.hpp>
 
 #define MAX_COLUMNS 20
 
@@ -14,12 +15,20 @@ public:
     void init() override {
         std::cout << "test component 1" << std::endl;
     }
+
+    void update() override {
+        std::cout << "test component 1 update" << std::endl;
+    }
 };
 
 class TestComponent2 : public Amazonian::Component {
 public:
     void init() override {
         std::cout << "test component 2" << std::endl;
+    }
+
+    void update() override {
+        std::cout << "test component 2 update" << std::endl;
     }
 
     void remove() override {
@@ -67,8 +76,6 @@ int main(void) {
 
     if (image->getComponent<TestComponent1>()) std::cout << "found test component 1" << std::endl;
     if (image->getComponent<TestComponent2>()) std::cout << "found test component 2" << std::endl;
-
-    image->removeComponent<TestComponent2>();
 
     while (!WindowShouldClose()) {
         UpdateCamera(&camera, CAMERA_FIRST_PERSON);

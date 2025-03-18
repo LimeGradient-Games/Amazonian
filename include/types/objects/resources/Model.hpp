@@ -16,6 +16,7 @@ namespace Amazonian {
         Texture2D getTexture();
         float getX();
         float getY();
+        float getZ();
 
         static Model* init(std::string modelPath, Vector3 position, float scale, Color color);
         static Model* init(std::string modelPath, float x, float y, float z, float scale, Color color);
@@ -29,11 +30,14 @@ namespace Amazonian {
         void setTexture(Texture2D texture);
         void setX(float x);
         void setY(float y);
+        void setZ(float z);
 
     protected:
         Color color;
         ::Model model;
         Texture2D texture;
         BoundingBox bounds;
+        Vector3 position;
+        float scale;
     };
 }
